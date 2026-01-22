@@ -25,13 +25,6 @@
 #  define TPM_DO_SELF_TEST(alg)
 #endif  // ENABLE_SELF_TESTS
 
-//** For Failures
-#if defined _POSIX_
-#  define FUNCTION_NAME 0
-#else
-#  define FUNCTION_NAME __FUNCTION__
-#endif
-
 // CODELOCATOR, if defined, returns a 64-bit vendor-defined value that indicates where
 // an event has occurred in the program.  This is a placeholder in the
 // case it is not defined.
@@ -41,7 +34,7 @@
 
 // Use no Parens in this macro value because it is pasted into a function call below
 #if defined(FAIL_TRACE) && FAIL_TRACE != NO
-#  define FAILLOCATOR() FUNCTION_NAME, __LINE__, CODELOCATOR()
+#  define FAILLOCATOR() __func__, __LINE__, CODELOCATOR()
 #else  // !FAIL_TRACE
 #  define FAILLOCATOR() CODELOCATOR()
 #endif  // FAIL_TRACE
