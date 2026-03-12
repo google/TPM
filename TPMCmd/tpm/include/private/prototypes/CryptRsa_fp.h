@@ -12,9 +12,7 @@ BOOL CryptRsaInit(void);
 BOOL CryptRsaStartup(void);
 
 //*** CryptRsaPssSaltSize()
-// This function computes the salt size used in PSS. It is broken out so that
-// the X509 code can get the same value that is used by the encoding function in this
-// module.
+// This function computes the salt size used in PSS.
 INT16
 CryptRsaPssSaltSize(INT16 hashSize, INT16 outSize);
 

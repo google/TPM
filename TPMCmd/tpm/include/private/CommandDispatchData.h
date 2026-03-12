@@ -2164,53 +2164,6 @@ GetTime_COMMAND_DESCRIPTOR_t _GetTimeData = {
 #define _GetTimeDataAddress 0
 #endif // CC_GetTime
 
-#if       CC_CertifyX509
-#include    "CertifyX509_fp.h"
-
-typedef TPM_RC (CertifyX509_Entry)(
-    CertifyX509_In*             in,
-    CertifyX509_Out*            out
-);
-
-
-typedef const struct
-{
-    CertifyX509_Entry           *entry;
-    UINT16                      inSize;
-    UINT16                      outSize;
-    UINT16                      offsetOfTypes;
-    UINT16                      paramOffsets[6];
-    BYTE                        types[10];
-} CertifyX509_COMMAND_DESCRIPTOR_t;
-
-CertifyX509_COMMAND_DESCRIPTOR_t _CertifyX509Data = {
-    /* entry         */         &TPM2_CertifyX509,
-    /* inSize        */         (UINT16)(sizeof(CertifyX509_In)),
-    /* outSize       */         (UINT16)(sizeof(CertifyX509_Out)),
-    /* offsetOfTypes */         offsetof(CertifyX509_COMMAND_DESCRIPTOR_t, types),
-    /* offsets       */         {(UINT16)(offsetof(CertifyX509_In, signHandle)),
-                                 (UINT16)(offsetof(CertifyX509_In, reserved)),
-                                 (UINT16)(offsetof(CertifyX509_In, inScheme)),
-                                 (UINT16)(offsetof(CertifyX509_In, partialCertificate)),
-                                 (UINT16)(offsetof(CertifyX509_Out, tbsDigest)),
-                                 (UINT16)(offsetof(CertifyX509_Out, signature))},
-    /* types         */         {TPMI_DH_OBJECT_H_UNMARSHAL,
-                                 TPMI_DH_OBJECT_H_UNMARSHAL + ADD_FLAG,
-                                 TPM2B_DATA_P_UNMARSHAL,
-                                 TPMT_SIG_SCHEME_P_UNMARSHAL + ADD_FLAG,
-                                 TPM2B_MAX_BUFFER_P_UNMARSHAL,
-                                 END_OF_LIST,
-                                 TPM2B_MAX_BUFFER_P_MARSHAL,
-                                 TPM2B_DIGEST_P_MARSHAL,
-                                 TPMT_SIGNATURE_P_MARSHAL,
-                                 END_OF_LIST}
-};
-
-#define _CertifyX509DataAddress (&_CertifyX509Data)
-#else
-#define _CertifyX509DataAddress 0
-#endif // CC_CertifyX509
-
 #if       CC_Commit
 #include    "Commit_fp.h"
 
@@ -5551,9 +5504,6 @@ COMMAND_DESCRIPTOR_t* s_CommandDataArray[] = {
 #if CC_Policy_AC_SendSelect
         (COMMAND_DESCRIPTOR_t*)_Policy_AC_SendSelectDataAddress,
 #endif // CC_Policy_AC_SendSelect
-#if CC_CertifyX509
-        (COMMAND_DESCRIPTOR_t*)_CertifyX509DataAddress,
-#endif // CC_CertifyX509
 #if CC_ACT_SetTimeout
         (COMMAND_DESCRIPTOR_t*)_ACT_SetTimeoutDataAddress,
 #endif // CC_ACT_SetTimeout

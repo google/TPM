@@ -44,8 +44,6 @@
 #define RAM_INDEX_SPACE            512
 #define ENABLE_PCR_NO_INCREMENT    YES
 
-#define SIZE_OF_X509_SERIAL_NUMBER 20
-
 // amount of space the platform can provide in PERSISTENT_DATA during
 // manufacture
 #define PERSISTENT_DATA_PLATFORM_SPACE  16

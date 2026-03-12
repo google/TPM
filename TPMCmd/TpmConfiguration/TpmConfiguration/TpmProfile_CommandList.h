@@ -35,12 +35,6 @@
 #define CC_FieldUpgradeStart          CC_NO
 #define CC_FirmwareRead               CC_NO
 
-// A prototype of CertifyX509 is provided here for informative purposes only.
-// While all of the TPM reference implementation is provided "AS IS" without any
-// warranty, the current design and implementation of CertifyX509 are considered
-// to be especially unsuitable for product use.
-#define CC_CertifyX509                CC_NO
-
 // Normal commands:
 
 #define CC_ACT_SetTimeout             (CC_YES && ACT_SUPPORT)

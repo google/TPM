@@ -356,9 +356,6 @@ const TPMA_CC    s_ccAttr [] = {
 #if CC_Policy_AC_SendSelect
         TPMA_CC_INITIALIZER(0x0196, 0, 0, 0, 0, 1, 0, 0, 0),
 #endif
-#if CC_CertifyX509
-        TPMA_CC_INITIALIZER(0x0197, 0, 0, 0, 0, 2, 0, 0, 0),
-#endif
 #if CC_ACT_SetTimeout
         TPMA_CC_INITIALIZER(0x0198, 0, 0, 0, 0, 1, 0, 0, 0),
 #endif
@@ -859,10 +856,6 @@ const COMMAND_ATTRIBUTES    s_commandAttributes [] = {
 #if CC_Policy_AC_SendSelect
         (COMMAND_ATTRIBUTES)(CC_Policy_AC_SendSelect * // 0x0196
             (DECRYPT_2+ALLOW_TRIAL)),
-#endif
-#if CC_CertifyX509
-        (COMMAND_ATTRIBUTES)(CC_CertifyX509 * // 0x0197
-            (DECRYPT_2+HANDLE_1_ADMIN+HANDLE_2_USER+ENCRYPT_2)),
 #endif
 #if CC_ACT_SetTimeout
         (COMMAND_ATTRIBUTES)(CC_ACT_SetTimeout * // 0x0198

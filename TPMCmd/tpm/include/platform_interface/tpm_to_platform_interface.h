@@ -79,19 +79,6 @@ LIB_EXPORT void _plat__ClockRateAdjust(_plat__ClockAdjustStep adjustment);
 
 //** From DebugHelpers.c
 
-#if CERTIFYX509_DEBUG
-
-//*** DebugFileInit()
-// This function opens the file used to hold the debug data.
-//  Return Type: int
-//   0        success
-//  != 0          error
-int DebugFileInit(void);
-
-//*** DebugDumpBuffer()
-void DebugDumpBuffer(int size, unsigned char* buf, const char* identifier);
-#endif  // CERTIFYX509_DEBUG
-
 //** From Entropy.c
 
 //*** _plat__GetEntropy()
