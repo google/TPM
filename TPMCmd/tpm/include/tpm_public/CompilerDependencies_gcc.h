@@ -36,6 +36,8 @@
 
 #define NORETURN __attribute__((noreturn))
 
+#define FALLTHROUGH __attribute__((fallthrough))
+
 #define TPM_INLINE inline __attribute__((always_inline))
 
 #ifdef __cplusplus

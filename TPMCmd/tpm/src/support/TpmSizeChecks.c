@@ -170,6 +170,7 @@ BOOL TpmSizeChecks(void)
                         "TPM_RH_ACT_%1X is not implemented by platform\n", act);
                     PASS = FALSE;
                 }
+                FALLTHROUGH;
                 default:
                     break;
             }

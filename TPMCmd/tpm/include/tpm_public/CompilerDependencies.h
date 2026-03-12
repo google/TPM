@@ -21,6 +21,9 @@
 #ifndef NORETURN
 #  define NORETURN
 #endif
+#ifndef FALLTHROUGH
+#  define FALLTHROUGH
+#endif
 #ifndef LIB_EXPORT
 #  define LIB_EXPORT
 #endif
