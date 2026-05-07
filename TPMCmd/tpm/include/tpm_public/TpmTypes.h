@@ -292,7 +292,6 @@ typedef UINT32 TPM_CC;
 #define TPM_CC_AC_GetCapability           (TPM_CC)(0x00000194)
 #define TPM_CC_AC_Send                    (TPM_CC)(0x00000195)
 #define TPM_CC_Policy_AC_SendSelect       (TPM_CC)(0x00000196)
-#define TPM_CC_CertifyX509                (TPM_CC)(0x00000197)
 #define TPM_CC_ACT_SetTimeout             (TPM_CC)(0x00000198)
 #define TPM_CC_ECC_Encrypt                (TPM_CC)(0x00000199)
 #define TPM_CC_ECC_Decrypt                (TPM_CC)(0x0000019A)
@@ -432,7 +431,6 @@ typedef UINT32 TPM_CC;
      + CC_AC_GetCapability               /* 0x00000194 */ \
      + CC_AC_Send                        /* 0x00000195 */ \
      + CC_Policy_AC_SendSelect           /* 0x00000196 */ \
-     + CC_CertifyX509                    /* 0x00000197 */ \
      + CC_ACT_SetTimeout                 /* 0x00000198 */ \
      + CC_ECC_Encrypt                    /* 0x00000199 */ \
      + CC_ECC_Decrypt                    /* 0x0000019A */ \
@@ -1192,48 +1190,6 @@ typedef UINT32 TPMA_MODES;
 #define TPMA_MODES_INITIALIZER(                              \
     fips_140_2, fips_140_3, fips_140_3_indicator, bits_at_4) \
     (TPMA_MODES)((fips_140_2 << 0) + (fips_140_3 << 1) + (fips_140_3_indicator << 2))
-
-// Table "Definition of TPMA_X509_KEY_USAGE Bits" (Part 2: Structures)
-#define TYPE_OF_TPMA_X509_KEY_USAGE      UINT32
-#define TPMA_X509_KEY_USAGE_TO_UINT32(a) (*((UINT32*)&(a)))
-#define UINT32_TO_TPMA_X509_KEY_USAGE(a) (*((TPMA_X509_KEY_USAGE*)&(a)))
-#define TPMA_X509_KEY_USAGE_TO_BYTE_ARRAY(i, a) \
-    UINT32_TO_BYTE_ARRAY((TPMA_X509_KEY_USAGE_TO_UINT32(i)), (a))
-#define BYTE_ARRAY_TO_TPMA_X509_KEY_USAGE(i, a)      \
-    {                                                \
-        UINT32 x = BYTE_ARRAY_TO_UINT32(a);          \
-        i        = UINT32_TO_TPMA_X509_KEY_USAGE(x); \
-    }
-#define TPMA_X509_KEY_USAGE_ALLOWED_BITS (0xff800000)
-
-// This implements Table "Definition of TPMA_X509_KEY_USAGE Bits" (Part 2: Structures) using bit masking
-typedef UINT32 TPMA_X509_KEY_USAGE;
-#define TPMA_X509_KEY_USAGE_decipherOnly     (TPMA_X509_KEY_USAGE)(1 << 23)
-#define TPMA_X509_KEY_USAGE_encipherOnly     (TPMA_X509_KEY_USAGE)(1 << 24)
-#define TPMA_X509_KEY_USAGE_cRLSign          (TPMA_X509_KEY_USAGE)(1 << 25)
-#define TPMA_X509_KEY_USAGE_keyCertSign      (TPMA_X509_KEY_USAGE)(1 << 26)
-#define TPMA_X509_KEY_USAGE_keyAgreement     (TPMA_X509_KEY_USAGE)(1 << 27)
-#define TPMA_X509_KEY_USAGE_dataEncipherment (TPMA_X509_KEY_USAGE)(1 << 28)
-#define TPMA_X509_KEY_USAGE_keyEncipherment  (TPMA_X509_KEY_USAGE)(1 << 29)
-#define TPMA_X509_KEY_USAGE_nonrepudiation   (TPMA_X509_KEY_USAGE)(1 << 30)
-#define TPMA_X509_KEY_USAGE_digitalSignature (TPMA_X509_KEY_USAGE)(1 << 31)
-
-//  This is the initializer for a TPMA_X509_KEY_USAGE bit array.
-#define TPMA_X509_KEY_USAGE_INITIALIZER(bits_at_0,                           \
-                                        decipheronly,                        \
-                                        encipheronly,                        \
-                                        crlsign,                             \
-                                        keycertsign,                         \
-                                        keyagreement,                        \
-                                        dataencipherment,                    \
-                                        keyencipherment,                     \
-                                        nonrepudiation,                      \
-                                        digitalsignature)                    \
-    (TPMA_X509_KEY_USAGE)((decipheronly << 23) + (encipheronly << 24)        \
-                          + (crlsign << 25) + (keycertsign << 26)            \
-                          + (keyagreement << 27) + (dataencipherment << 28)  \
-                          + (keyencipherment << 29) + (nonrepudiation << 30) \
-                          + (digitalsignature << 31))
 
 // Table "Definition of TPMA_ACT Bits" (Part 2: Structures)
 #define TYPE_OF_TPMA_ACT      UINT32

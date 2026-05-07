@@ -45,7 +45,7 @@ LIB_EXPORT void _plat__RunCommand(
 #if ALLOW_FORCE_FAILURE_MODE
     if(_plat_internal_IsForceFailureMode())
     {
-        _plat__Fail(__FUNCTION__, __LINE__, 0xFFFFFFFFFFFFFFFF, FATAL_ERROR_FORCED);
+        _plat__Fail(__func__, __LINE__, 0xFFFFFFFFFFFFFFFF, FATAL_ERROR_FORCED);
     }
 #endif
 

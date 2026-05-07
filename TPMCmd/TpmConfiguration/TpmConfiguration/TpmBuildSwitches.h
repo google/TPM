@@ -71,9 +71,6 @@
 // has been added someplace (preferably, somewhere in CryptRand.c)
 #define DRBG_DEBUG_PRINT            (NO  * DEBUG)
 
-// This define is used to control the debug for the CertifyX509 command.
-#define CERTIFYX509_DEBUG           (NO * DEBUG)
-
 // This provides fixed seeding of the RNG when doing debug on a simulator. This
 // should allow consistent results on test runs as long as the input parameters
 // to the functions remains the same.

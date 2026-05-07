@@ -68,7 +68,6 @@ function(full_generate_tpm_sources)
         "command/Attestation/Attest_spt.c"
         "command/Attestation/Certify.c"
         "command/Attestation/CertifyCreation.c"
-        "command/Attestation/CertifyX509.c"
         "command/Attestation/GetCommandAuditDigest.c"
         "command/Attestation/GetSessionAuditDigest.c"
         "command/Attestation/GetTime.c"
@@ -257,10 +256,6 @@ function(full_generate_tpm_sources)
         "support/TableMarshalData.c"
         "support/TpmFail.c"
         "support/TpmSizeChecks.c"
-        "X509/TpmASN1.c"
-        "X509/X509_ECC.c"
-        "X509/X509_RSA.c"
-        "X509/X509_spt.c"
     )
 endfunction()
 

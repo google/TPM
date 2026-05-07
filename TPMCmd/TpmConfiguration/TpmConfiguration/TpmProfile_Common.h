@@ -165,7 +165,7 @@
 #define RH_ACT_7                                ( NO * ACT_SUPPORT)
 #define RH_ACT_8                                ( NO * ACT_SUPPORT)
 #define RH_ACT_9                                ( NO * ACT_SUPPORT)
-#define RH_ACT_A                                (YES * ACT_SUPPORT)
+#define RH_ACT_A                                ( NO * ACT_SUPPORT)
 #define RH_ACT_B                                ( NO * ACT_SUPPORT)
 #define RH_ACT_C                                ( NO * ACT_SUPPORT)
 #define RH_ACT_D                                ( NO * ACT_SUPPORT)

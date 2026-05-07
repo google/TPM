@@ -79,7 +79,7 @@ static long NvFileSize(int leaveAt)
     {
         case SEEK_SET:
             filePos = 0;
-            // [[fallthrough]];
+            FALLTHROUGH;
         case SEEK_CUR:
             fseek(s_NvFile, filePos, SEEK_SET);
             break;

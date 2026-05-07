@@ -4,7 +4,7 @@
 
 // Move this to a future _plat_NvUpdateData() API and perform this in
 // platform code.
-void UpgradeNvData()
+static void UpgradeNvData(void)
 {
     // only update when required to avoid unnecessary flash defragmentation
     if(gp.firmwareV1 != _plat__GetTpmFirmwareVersionHigh()
