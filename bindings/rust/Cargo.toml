@@ -1,0 +1,13 @@
+[package]
+name = "tpm2-ref-sys"
+version = "0.0.5"
+edition = "2024"
+rust-version = "1.95"
+license = "Apache-2.0"
+keywords = ["tpm", "tss", "tpm2"]
+categories = ["cryptography", "no-std"]
+
+[dependencies]
+
+[build-dependencies]
+cc = { version = "1.0", features = ["parallel"] }
