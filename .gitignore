@@ -369,3 +369,6 @@ TPMCmd/tpm/src/libtpm.a
 # ignore Visual Studio's default output directory for CMake projects
 TPMCmd/out/
 testing/Temporary/CTestCostData.txt
+
+# Rust bindings
+bindings/rust/target/
