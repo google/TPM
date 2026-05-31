@@ -11,11 +11,6 @@ use super::*;
 const FALSE: BOOL = 0;
 const TRUE: BOOL = 1;
 
-const TPM_RC_FAILURE: u32 = 0x101;
-const TPM_RC_NO_RESULT: u32 = 0x154;
-const NV_WRITEFAILURE: c_int = 1;
-const NV_INVALID_LOCATION: c_int = -1;
-
 #[test]
 fn test_hcrtm() {
     unsafe { _TPM_Init() };
@@ -51,10 +46,18 @@ fn fail_execute_command() {
 fn fail_tpm_manufacture() {
     const MANUF_INVALID_CONFIG: c_int = -1;
     assert_eq!(unsafe { TPM_Manufacture(1) }, MANUF_INVALID_CONFIG);
+
+    const TEARDOWN_OK: c_int = 0;
+    assert_eq!(unsafe { TPM_TearDown() }, TEARDOWN_OK);
 }
 
 struct FailPlatform;
 register_platform!(&FailPlatform);
+
+const TPM_RC_FAILURE: u32 = 0x101;
+const TPM_RC_NO_RESULT: u32 = 0x154;
+const NV_WRITEFAILURE: c_int = 1;
+const NV_INVALID_LOCATION: c_int = -1;
 
 impl Platform for FailPlatform {
     // Status

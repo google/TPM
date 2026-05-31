@@ -1,10 +1,40 @@
 //! Bindings to the TPM2 Reference Implementation in C
 //!
-//! This includes the entrypoints to the reference code:
-//!   - [`TPM_Manufacture`]: manufacture the NV Data
-//!   - [`_TPM_Init`]: initialize the reference code
-//!   - [`_TPM_Hash_Start`]/[`_TPM_Hash_Data`]/[`_TPM_Hash_End`]: H-CRTM
-//!   - [`ExecuteCommand`]: run a command
+//! ## Platform
+//! 
+//! 
+//! 
+//! ## Entrypoints
+//! 
+//! The Reference Implemenation is invoked via functions in the
+//! `platform_interface/platform_to_tpm_interface.h` C header file. These
+//! functions are exposed via a top-level `unsafe extern "C"` block.
+//!
+//! ### Manufacture
+//!
+//! Before any other functions are called, the TPM's NV must be initialized
+//! with [`TPM_Manufacture`], and can be re-manufactured by calling
+//! [`TPM_TearDown`] then calling [`TPM_Manufacture`] again.
+//!
+//! These functions return `0` on success, or a non-zero error code on failure.
+//!
+//! ### Running Commands
+//! 
+//! [`_TPM_Init`] must be called before executing any commands to properly
+//! initialize the TPM's state (using the [`Platform`] implementation).
+//! After this, [`ExecuteCommand`] can be used to run a command.
+//!   - The request is provided 
+//!
+//! ### H-CRTM Measurement (optional)
+//!
+//! Functions to run a Hardware-based Configuration Register Triggered Measurement (H-CRTM) sequence:
+//! - [`_TPM_Hash_Start`]: starts the H-CRTM sequence.
+//! - [`_TPM_Hash_Data`]: feeds data into the active sequence.
+//! - [`_TPM_Hash_End`]: ends the sequence.
+//!
+//! These functions return `1` (`TRUE`) on success, or `0` (`FALSE`) on failure.
+//! [`_TPM_Init`] must be called before these functions are run.
+//!
 //!
 //! It also includes the [`Platform`] trait, so that a user can provide the
 //! platform-specific functionality required by the Reference Implementation.
@@ -21,58 +51,32 @@ use core::ffi::c_int;
 
 pub use platform::*;
 
+/// Value taken from 
 pub const MAX_RESPONSE_SIZE: u32 = 0x1000 - 0x80;
 
 pub type BOOL = c_int;
 
+#[allow(clippy::missing_safety_doc)]
 unsafe extern "C" {
-    /// Manufactures the TPM's NV Data in preparation for the first use.
-    pub fn TPM_Manufacture(firstTime: BOOL) -> c_int;
+    /// Initializes the TPM values in preparation for the TPM's first use.
+    pub fn TPM_Manufacture(first_time: BOOL) -> c_int;
+    /// Prepares the TPM for re-manufacture.
+    pub fn TPM_TearDown() -> c_int;
 
-    /// Initializes the TPM values and subsystem.
-    ///
-    /// This function must be called before:
-    ///   - [`_TPM_Hash_Start`]
-    ///   - [`ExecuteCommand`]
-    ///
-    /// # Safety
-    ///   - NV Data must be initialized via [`TPM_Manufacture`] beforehand.
+    /// Initializes the TPM reference implementation state.
     pub fn _TPM_Init();
-
-    /// Starts an H-CRTM Event Sequence.
-    ///
-    /// # Safety
-    ///   - [`_TPM_Init`] must be called beforehand.
-    pub fn _TPM_Hash_Start() -> BOOL;
-    /// Sends data to be hashed as part of an H-CRTM Event Sequence.
-    ///
-    /// # Safety
-    ///   - [`_TPM_Hash_Start`] must be called beforehand.
-    pub fn _TPM_Hash_Data(dataSize: u32, data: *const u8) -> BOOL;
-    /// Completes an H-CRTM Event Sequence.
-    ///
-    /// # Safety
-    ///   - [`_TPM_Hash_Start`]/[`_TPM_Hash_Data`] must be called beforehand.
-    pub fn _TPM_Hash_End() -> BOOL;
-
-    /// Executes a raw TPM command.
-    ///
-    /// When calling this function:
-    ///   - `request` / `requestSize` contain the raw request buffer.
-    ///   - `response` / `responseSize` contain the raw response buffer.
-    ///
-    /// On return, `response` / `responseSize` contain the response. Note that
-    /// the `response` pointer may contain a new value.
-    ///
-    /// # Safety
-    ///   - `request` must point to `requestSize` bytes.
-    ///   - `*response` must point to `responseSize` bytes.
-    ///   - `responseSize` must be at least [`MAX_RESPONSE_SIZE`].
-    ///   - [`_TPM_Init`] must be called beforehand.
+    /// Executes a TPM command.
     pub fn ExecuteCommand(
-        requestSize: u32,
+        request_size: u32,
         request: *const u8,
-        responseSize: *mut u32,
+        response_size: *mut u32,
         response: *mut *mut u8,
     );
+
+    /// Starts an H-CRTM measurement sequence.
+    pub fn _TPM_Hash_Start() -> BOOL;
+    /// Feeds data into the active H-CRTM measurement sequence.
+    pub fn _TPM_Hash_Data(data_size: u32, data: *const u8) -> BOOL;
+    /// Ends the active H-CRTM measurement sequence.
+    pub fn _TPM_Hash_End() -> BOOL;
 }

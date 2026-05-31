@@ -19,6 +19,7 @@ pub struct SpecCapabilityValue {
 }
 
 /// Platform-specific functionality called by the Core TPM library.
+#[allow(clippy::missing_safety_doc)]
 pub trait Platform {
     // Status
     unsafe fn locality_get(&self) -> u8;
@@ -31,8 +32,8 @@ pub trait Platform {
     unsafe fn end_ok_tpm_init(&self);
 
     // Manufacture
-    unsafe fn tear_down(&self);
     unsafe fn get_platform_manufacture_data(&self, buf: *mut u8, buf_size: u32);
+    unsafe fn tear_down(&self);
 
     // Cryptography
     unsafe fn get_entropy(&self, entropy: *mut u8, amount: u32) -> i32;
